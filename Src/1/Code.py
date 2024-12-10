@@ -1,36 +1,42 @@
+
 import os
 from PIL import Image
 from datetime import datetime
 
-class ImageHandler:
+class ImageProcessor:
     def __init__(self, image_path):
         self.image_path = image_path
-        self.image = self.open_image()
+        self.image = None
+        self.load_image()
 
-    def open_image(self):
-        try:
-            return Image.open(self.image_path)
-        except Exception as e:
-            print(f"Ошибка при открытии изображения: {e}")
-            return None
+    def load_image(self):
+        """Загружает изображение и проверяет его наличие."""
+        if os.path.exists(self.image_path):
+            self.image = Image.open(self.image_path)
+        else:
+            raise FileNotFoundError(f"Файл {self.image_path} не найден.")
 
     def get_image_info(self):
-        if self.image:
-            image_info = {}
-            image_info['size'] = os.path.getsize(self.image_path)  # размер в байтах
-            image_info['resolution'] = self.image.size  # разрешение (ширина, высота)
-            creation_time = os.path.getctime(self.image_path)
-            image_info['creation_date'] = datetime.fromtimestamp(creation_time)  # дата создания
-            return image_info
-        return None
+        """Возвращает информацию об изображении: размер, разрешение, дата создания."""
+        if self.image is None:
+            raise ValueError("Изображение не загружено.")
+
+        info = {
+            'Размер (байты)': os.path.getsize(self.image_path),
+            'Разрешение': self.image.size,  # (ширина, высота)
+            'Дата создания': self.get_creation_date()
+        }
+        return info
+
+    def get_creation_date(self):
+        """Возвращает дату создания изображения."""
+        creation_time = os.path.getctime(self.image_path)
+        return datetime.fromtimestamp(creation_time)
 
     def rename_image(self, new_name):
-        if self.image:
-            dir_name = os.path.dirname(self.image_path)
-            new_image_path = os.path.join(dir_name, new_name)
-            try:
-                os.rename(self.image_path, new_image_path)
-                self.image_path = new_image_path  # обновляем путь к изображению
-                print(f"Изображение переименовано в: {new_image_path}")
-            except Exception as e:
-                print(f"Ошибка при переименовании: {e}")
+        """Переименовывает изображение."""
+        new_path = os.path.join(os.path.dirname(self.image_path), new_name)
+
+        os.rename(self.image_path, new_path)
+        self.image_path = new_path  # Обновляем путь к изображению
+        self.load_image()  # Загружаем новое изображение

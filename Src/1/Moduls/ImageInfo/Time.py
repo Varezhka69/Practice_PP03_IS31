@@ -1,3 +1,4 @@
+impotr sys
 import os
 import time
 from datetime import datetime
@@ -10,6 +11,11 @@ class ImageInfo:
         """Возвращает информацию об изображении: размер, разрешение, дата создания."""
         if self.image_loader.image is None:
             raise ValueError("Изображение не загружено.")
+        info_sizes = {
+ 'Размер данных изображение': sys.getsizeof(self.image_loader.image),
+ 'Размер объекта ImageInfo': sys.getsizeof(self)
+}
+info.update(info_sizes)
 
         # Замеряем время получения размера изображения
         start_time = time.time()

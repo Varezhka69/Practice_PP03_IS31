@@ -29,19 +29,7 @@ class ImageLoader:
         else:
             raise ValueError("Изображение не загружено.")
 #Пример использования
-        if __name__ == "__main__":
-            # Укажите путь к изображению
-            image_path = "path/to/your/image.jpg"
-        
-            try:
-                # Создаем экземпляр ImageLoader
-                loader = ImageLoader(image_path)
-        
-                # Получаем размер изображения
-                size = loader.get_image_size()
-                print(f"Размер изображения в байтах: {size}")
-        
-            except FileNotFoundError as e:
-                print(e)
-            except ValueError as e:
-                print(e)
+image_path = "C:/Users/Nout/Pictures/new_image_name.jpg"  # Замените на путь к вашему изображению
+loader = ImageLoader(image_path)
+size = loader.get_image_size()
+

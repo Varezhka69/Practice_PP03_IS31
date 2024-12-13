@@ -27,3 +27,14 @@ def get_image_info(file_path):
             f"Размер в байтах: {size_in_bytes}\\n"
             f"Время открытия изображения: {open_time - start_time:.6f} секунд\\n"
             f"Время получения информации: {info_time - open_time:.6f} секунд")
+# Пример использования
+if __name__ == "__main__":
+    # Путь к изображению
+    image_path = 'C:/Users/Nout/Pictures/Безымянный.png'  # Замените на путь к вашему файлу изображения
+try:
+    info = get_image_info(image_path)
+    print(info)
+except FileNotFoundError:
+        print(f"Файл {image_path} не найден.")
+except Exception as e:
+        print(f"Произошла ошибка: {e}")

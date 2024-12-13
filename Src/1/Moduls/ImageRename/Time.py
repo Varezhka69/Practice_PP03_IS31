@@ -41,3 +41,22 @@ class ImageRenamer:
         # Выводим размер объекта
         print(f"Размер объекта 'ImageLoader': {sys.getsizeof(self.imageloader)} байт")
         print(f"Размер объекта 'ImageRenamer': {sys.getsizeof(self)} байт")
+def main():
+    # Путь к существующему изображению
+    image_path = "C:/Users/Nout/Pictures/ddFaZkMx56E.jpg"  # Замените на ваш путь
+
+    # Создаем экземпляр класса ImageLoader
+    loader = ImageLoader(image_path)
+
+    # Загружаем изображение (пока просто выводим сообщение)
+    loader.load_image()
+
+    # Создаем экземпляр класса ImageRenamer
+    renamer = ImageRenamer(loader)
+
+    # Переименовываем изображение
+    new_image_name = "new_image_name.jpg"  # Задайте новое имя
+    renamer.renameimage(new_image_name)
+
+if __name__ == "__main__":
+    main()
